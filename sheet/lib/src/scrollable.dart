@@ -337,6 +337,10 @@ class SheetState extends State<SheetScrollable>
   SheetController get _effectiveScrollController =>
       widget.controller ?? _fallbackScrollController!;
 
+  @override
+  double get devicePixelRatio => _devicePixelRatio;
+  late double _devicePixelRatio;
+
   // Only call this from places that will definitely trigger a rebuild.
   void _updatePosition() {
     _configuration = widget.scrollBehavior ?? SheetBehaviour();
@@ -392,6 +396,7 @@ class SheetState extends State<SheetScrollable>
 
   @override
   void didChangeDependencies() {
+    _devicePixelRatio = MediaQuery.maybeDevicePixelRatioOf(context) ?? View.of(context).devicePixelRatio;
     _updatePosition();
     super.didChangeDependencies();
   }
